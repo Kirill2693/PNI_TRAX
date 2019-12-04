@@ -165,24 +165,37 @@ void pars::print_data()
 {
     for(int i=0;i<size;i++)
     {
+        cout<<"-----------------"<<endl;
+        cout<<pac[i].name<<endl;
         if(pac[i].completed)
         {
             switch (pac[i].type)
             {
-             case "float":
+             case 1:
                cout<<"float type"<<endl;
                cout<<HEX_to_FLOAT(pac[i].data)<<endl;
                 break;
-             case "char":
+             case 2:
                 cout<<"char type"<<endl;
                 cout<<HEX_to_CHAR(pac[i].data)<<endl;
                 break;
-              case "bool":
+              case 3:
+            {
                 cout<<"bool"<<endl;
                 bool out = HEX_to_BOOL(pac[i].data);
+                if(out)
+                {
+                    cout<<"true"<<endl;
+                }
+                else
+                {
+                    cout<<"false"<<endl;
+                }
                 break;
-              case "float4":
+             }
+              case 4:
                 cout<<"float[4]"<<endl;
+                print_float4(pac[i].data);
                 break;
             }
         }
@@ -195,5 +208,13 @@ void pars::print_data()
 
 void pars::print_float4(string str)
 {
-
+    cout<<"Float[4]"<<endl;
+    float a = HEX_to_FLOAT(str.substr(0,8));
+    cout<<"a"<<endl;
+    float b = HEX_to_FLOAT(str.substr(9,8));
+    cout<<"b"<<endl;
+    float c = HEX_to_FLOAT(str.substr(17,8));
+    cout<<"c"<<endl;
+    float d = HEX_to_FLOAT(str.substr(25,8));
+    cout<<"d"<<endl;
 }
