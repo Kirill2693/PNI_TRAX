@@ -20,8 +20,8 @@ int pars::HEX_to_INT(string str)
     stringstream ss(str);
     ss >> hex >> u.ul;
     int result  = u.f;
-    cout<<"hex to int"<<endl;
-    cout<<result<<endl;
+   // cout<<"hex to int"<<endl;
+    //cout<<result<<endl;
     return result;
 }
 
@@ -36,8 +36,8 @@ float pars::HEX_to_FLOAT(string str)
     stringstream ss(str);
     ss >> hex >> u.ul;
     float result  = u.f;
-    cout<<"hex to float"<<endl;
-    cout<<result<<endl;
+    //cout<<"hex to float"<<endl;
+    //cout<<result<<endl;
     return result;
 }
 
@@ -46,8 +46,8 @@ char pars::HEX_to_CHAR(string str)
 
     int asciiVal = HEX_to_INT(str);
     char asciiChar = static_cast<char>(asciiVal);
-    cout<<"hex to char"<<endl;
-    cout<<asciiChar<<endl;
+    //cout<<"hex to char"<<endl;
+    //cout<<asciiChar<<endl;
     return asciiChar;
 }
 
@@ -59,18 +59,18 @@ bool pars::HEX_to_BOOL(string str)
     if(value>0)
     {
       flag = true;
-       cout<<"true"<<endl;
+       //cout<<"true"<<endl;
     }
     else
     {
       flag = false;
-       cout<<"true"<<endl;
+       //cout<<"true"<<endl;
     }
     return flag;
 }
 int pars::serch_ID(int id)
 {
-    cout<<"serch_ID"<<endl;
+    //cout<<"serch_ID"<<endl;
     int pos = 0;
     int find_id;
     string ID;
@@ -86,7 +86,7 @@ int pars::serch_ID(int id)
       //cout<< "id-"<<find_id<<endl;
        if(find_id == id)
        {
-        cout<<"find id"<<endl;
+        cout<< "id-"<<find_id<<endl;
         break;
 
        }
@@ -105,15 +105,20 @@ int pars::serch_ID(int id)
 bool pars::check_data(int pos, int size_d)
 {
     bool check = false;
-    cout<<"check_data"<<endl;
+    //cout<<"check_data"<<endl;
     int offset = pos+2+size_d;
-    if(offset+2>buffer.length())
+    if(offset>buffer.length())
     {
        check = false;
        return false;
     }
+    if(offset == buffer.length())
+    {
+        check =true;
+        return true;
+    }
     string check_str = buffer.substr(offset,2);
-    cout<<"CHECK ID:  "<<check_str<<endl;
+    //cout<<"CHECK ID:  "<<check_str<<endl;
     int id = HEX_to_INT(check_str);
     for(int i =0;i<size;i++)
     {
@@ -123,25 +128,25 @@ bool pars::check_data(int pos, int size_d)
         if(id==pac[i].id)
         {
 
-            cout<<"Check"<<endl;
+            //cout<<"Check"<<endl;
             check=true;
             break;
         }
     }
     if(check)
     {
-        cout<<"Check"<<endl;
+        //cout<<"Check"<<endl;
         return true;
     }
     else
     {
-        cout<<"No Check"<<endl;
+        //cout<<"No Check"<<endl;
         return false;
     }
    }
 void pars::pars_data(int i)
 {
-    cout<<"PARS__________"<<endl;
+    //cout<<"PARS__________"<<endl;
     for(i;i<size;i++)
     {
         cout<<"New component->"<<pac[i].id<<endl;
@@ -156,7 +161,18 @@ void pars::pars_data(int i)
                 cout<<"check"<<endl;
                 pac[i].data=buffer.substr(position+2,pac[i].size);
                 cout<< "DATA:  "<<pac[i].data<<endl;
+                pac[i].completed =true;
             }
+            else
+            {
+                cout<<"no check"<<endl;
+                pac[i].completed =false;
+            }
+        }
+        else
+        {
+            cout<<"no find"<<endl;
+            pac[i].completed =false;
         }
     }
 }
