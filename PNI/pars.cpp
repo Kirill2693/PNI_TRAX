@@ -1,5 +1,4 @@
 #include "pars.h"
-#include "comp.h"
 #include <iostream>
 #include <string.h>
 #include <sstream>
@@ -55,7 +54,7 @@ bool pars::HEX_to_BOOL(string str)
 {
     bool flag;
     int value = HEX_to_INT(str);
-     cout<<"hex to char"<<endl;
+
     if(value>0)
     {
       flag = true;
@@ -68,10 +67,9 @@ bool pars::HEX_to_BOOL(string str)
     }
     return flag;
 }
-int pars::serch_ID(int id)
+int pars::serch_ID(int id, int pos)
 {
     //cout<<"serch_ID"<<endl;
-    int pos = 0;
     int find_id;
     string ID;
     string b;
@@ -146,20 +144,33 @@ bool pars::check_data(int pos, int size_d)
    }
 void pars::pars_data(int i)
 {
-    //cout<<"PARS__________"<<endl;
+    cout<<"PARS__________"<<endl;
     for(i;i<size;i++)
     {
         cout<<"New component->"<<pac[i].id<<endl;
-        int position = serch_ID(pac[i].id);
-        cout<<"Position->"<<position<<endl;
-        if(position!=-1)
+        //int position = serch_ID(pac[i].id);
+        int position =0;
+        int current_position=0;
+        bool flag;
+        while(current_position != -1)
+        {
+            current_position = serch_ID(pac[i].id,position);
+            cout<<"Position->"<<current_position<<endl;
+            flag = check_data(current_position,pac[i].size);
+            if(flag)
+            {
+                break;
+            }
+            position = current_position+1;
+        }
+
+        if(current_position!=-1)
         {
             cout<<"verify"<<endl;
-            bool flag = check_data(position,pac[i].size);
             if(flag)
             {
                 cout<<"check"<<endl;
-                pac[i].data=buffer.substr(position+2,pac[i].size);
+                pac[i].data=buffer.substr(current_position+2,pac[i].size);
                 cout<< "DATA:  "<<pac[i].data<<endl;
                 pac[i].completed =true;
             }
@@ -188,15 +199,18 @@ void pars::print_data()
             switch (pac[i].type)
             {
              case 1:
+               cout<<"HEX data: "<<pac[i].data<<endl;
                cout<<"float type"<<endl;
                cout<<HEX_to_FLOAT(pac[i].data)<<endl;
                 break;
              case 2:
+                cout<<"HEX data: "<<pac[i].data<<endl;
                 cout<<"char type"<<endl;
                 cout<<HEX_to_CHAR(pac[i].data)<<endl;
                 break;
               case 3:
-            {
+                {
+                cout<<"HEX data: "<<pac[i].data<<endl;
                 cout<<"bool"<<endl;
                 bool out = HEX_to_BOOL(pac[i].data);
                 if(out)
@@ -210,6 +224,7 @@ void pars::print_data()
                 break;
              }
               case 4:
+                cout<<"HEX data: "<<pac[i].data<<endl;
                 cout<<"float[4]"<<endl;
                 print_float4(pac[i].data);
                 break;
@@ -224,13 +239,13 @@ void pars::print_data()
 
 void pars::print_float4(string str)
 {
-    cout<<"Float[4]"<<endl;
+    //cout<<"Float[4]"<<endl;
     float a = HEX_to_FLOAT(str.substr(0,8));
-    cout<<"a"<<endl;
-    float b = HEX_to_FLOAT(str.substr(9,8));
-    cout<<"b"<<endl;
-    float c = HEX_to_FLOAT(str.substr(17,8));
-    cout<<"c"<<endl;
-    float d = HEX_to_FLOAT(str.substr(25,8));
-    cout<<"d"<<endl;
+    cout<<a<<endl;
+    float b = HEX_to_FLOAT(str.substr(8,8));
+    cout<<b<<endl;
+    float c = HEX_to_FLOAT(str.substr(16,8));
+    cout<<c<<endl;
+    float d = HEX_to_FLOAT(str.substr(24,8));
+    cout<<d<<endl;
 }

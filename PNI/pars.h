@@ -1,7 +1,6 @@
 #ifndef PARS_H
 #define PARS_H
 #include <iostream>
-#include "comp.h"
 #include <string.h>
 #include <sstream>
 using namespace std;
@@ -31,7 +30,7 @@ public:
    float HEX_to_FLOAT(string str);
    char HEX_to_CHAR(string str);
    bool HEX_to_BOOL(string str);
-   int serch_ID(int id);
+   int serch_ID(int id,int pos);
    bool check_data(int pos, int size_d);
    void pars_data(int i);
    void print_data();
@@ -45,10 +44,10 @@ component pac[17] = {
     {"0",24,8,false,1,"kPitch"},
     {"0",25,8,false,1,"kRoll"},
     {"0",79,2,false,2,"kHeadingStatus"},
-    {"0",77,32,false,3,"kQuaternion"},
+    {"0",77,32,false,4,"kQuaternion"},
     {"0",7,8,false,1,"kTemperature"},
-    {"0",8,2,false,4,"kDistortion"},
-    {"0",9,2,false,4,"kCalStatus"},
+    {"0",8,2,false,3,"kDistortion"},
+    {"0",9,2,false,3,"kCalStatus"},
     {"0",21,8,false,1,"kAccelX"},
     {"0",22,8,false,1,"kAccelY"},
     {"0",23,8,false,1,"kAccelZ"},
