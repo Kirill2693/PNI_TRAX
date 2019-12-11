@@ -6,8 +6,7 @@ using namespace std;
 int main()
 {
     pars p;
-    p.setB("0541cc000018429c999a");//05_41cc0000_18_429c999a
-    string str ="F2";
+    p.setB("05430D083B183F91BCD8193EDF4DE94F00080015BCA408C0163BFB4DAB173F80F5081BC16EA4371cc12d31271d42513d4f4a000000004b000000004c00000000");//нет только кватерниона
     p.pars_data(0);
     p.print_data();
     return 0;
